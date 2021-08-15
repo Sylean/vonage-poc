@@ -1,12 +1,15 @@
 <template>
-  <div class="hello">
-    <div id="otEmbedContainer" style="width:800px; height:640px"></div>
+  <div id="video-chat">
     <div id="videos">
       <div id="subscriber"></div>
       <div id="publisher" ></div>
     </div>
     <div id="ui-controls">
-      <select v-model="selected">
+      <div id="users-container">
+        <h2>Users</h2>
+        <ul id="user-list"></ul>
+      </div>
+      <select id='room-select' v-model="selected">
         <option>Room 1</option>
         <option>Room 2</option>
         <option>Room 3</option>
@@ -33,7 +36,7 @@ function initializeSession() {
 
   session.on('streamCreated', function(event) {
     session.subscribe(event.stream, 'subscriber', {
-      insertMode: 'replace',
+      insertMode: 'append',
       width: '100%',
       height: '100%'
     }, handleError);
@@ -73,9 +76,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-body, html {
-    background-color: gray;
-    height: 100%;
+#video-chat {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+#ui-controls {
+  width: 20%;
+  margin-left: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px;
+}
+
+#room-select {
+  width: 80%;
 }
 
 #videos {
@@ -84,6 +102,7 @@ body, html {
     height: 100%;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
 }
 
 #subscriber {
